@@ -31,10 +31,9 @@ export class BackgroundRenderer {
     }
 
     try {
-      this.initScene();
+      this.initSceneWithElements();
       this.initCamera();
       this.initRenderer();
-      this.initParticles();
       this.addResizeListener();
       this.startAnimation();
       this.isInitialized = true;
@@ -81,18 +80,200 @@ export class BackgroundRenderer {
   }
 
   /**
+   * Create and initialize 3D scene with automotive and wind elements
+   */
+  initSceneWithElements() {
+    this.scene = new THREE.Scene();
+
+    // Create automotive element (car with rear view camera)
+    this.createAutomotiveElement();
+
+    // Create wind industry element (turbine)
+    this.createWindElement();
+
+    // Add ambient particles
+    this.createParticles();
+  }
+
+  /**
+   * Create automotive element (car with rear view camera)
+   */
+  createAutomotiveElement() {
+    const carGroup = new THREE.Group();
+
+    // Car body (modern sedan)
+    const carBodyGeometry = new THREE.BoxGeometry(4, 1.2, 2);
+    const carMaterial = new THREE.MeshPhongMaterial({
+      color: 0x3366cc,
+      shininess: 100,
+      transparent: true,
+      opacity: 0.9
+    });
+    const carBody = new THREE.Mesh(carBodyGeometry, carMaterial);
+    carGroup.add(carBody);
+
+    // Car roof
+    const roofGeometry = new THREE.BoxGeometry(2.5, 0.8, 1.8);
+    const roofMaterial = new THREE.MeshPhongMaterial({
+      color: 0x3366cc,
+      shininess: 100,
+      transparent: true,
+      opacity: 0.9
+    });
+    const roof = new THREE.Mesh(roofGeometry, roofMaterial);
+    roof.position.set(-0.2, 1, 0);
+    carGroup.add(roof);
+
+    // Wheels
+    const wheelGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 32);
+    const wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+
+    const wheelPositions = [
+      [-1.5, -0.7, 0.8], [1.5, -0.7, 0.8],
+      [-1.5, -0.7, -0.8], [1.5, -0.7, -0.8]
+    ];
+
+    wheelPositions.forEach(pos => {
+      const wheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+      wheel.rotation.z = Math.PI / 2;
+      wheel.position.set(...pos);
+      carGroup.add(wheel);
+    });
+
+    // Rear view camera
+    const cameraGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.3, 16);
+    const cameraMaterial = new THREE.MeshPhongMaterial({
+      color: 0xff0000,
+      emissive: 0xff0000,
+      emissiveIntensity: 0.5
+    });
+    const camera = new THREE.Mesh(cameraGeometry, cameraMaterial);
+    camera.position.set(0, 0.6, 1.05);
+    camera.rotation.x = Math.PI / 2;
+    carGroup.add(camera);
+
+    // Camera display/monitor
+    const displayGeometry = new THREE.PlaneGeometry(0.8, 0.6);
+    const displayMaterial = new THREE.MeshBasicMaterial({
+      color: 0x00ff00,
+      side: THREE.DoubleSide
+    });
+    const display = new THREE.Mesh(displayGeometry, displayMaterial);
+    display.position.set(0, 1.8, 1.3);
+    display.rotation.x = -0.5;
+    carGroup.add(display);
+
+    // Position car in scene
+    carGroup.position.set(-4, 0, 0);
+    carGroup.rotation.y = 0.3;
+
+    // Add car to scene
+    this.scene.add(carGroup);
+
+    // Store reference for animation
+    this.automotiveElement = carGroup;
+
+    // Add ambient light for car
+    const carLight = new THREE.PointLight(0xffffff, 1, 10);
+    carLight.position.set(-4, 2, 2);
+    this.scene.add(carLight);
+  }
+
+  /**
+   * Create wind industry element (turbine)
+   */
+  createWindElement() {
+    const turbineGroup = new THREE.Group();
+
+    // Tower
+    const towerGeometry = new THREE.CylinderGeometry(0.5, 0.8, 8, 32);
+    const towerMaterial = new THREE.MeshPhongMaterial({
+      color: 0x666666,
+      transparent: true,
+      opacity: 0.9
+    });
+    const tower = new THREE.Mesh(towerGeometry, towerMaterial);
+    tower.position.y = 4;
+    turbineGroup.add(tower);
+
+    // Nacelle
+    const nacelleGeometry = new THREE.BoxGeometry(1.5, 1, 1);
+    const nacelleMaterial = new THREE.MeshPhongMaterial({
+      color: 0x444444,
+      transparent: true,
+      opacity: 0.9
+    });
+    const nacelle = new THREE.Mesh(nacelleGeometry, nacelleMaterial);
+    nacelle.position.y = 8;
+    turbineGroup.add(nacelle);
+
+    // Rotor
+    const rotorGroup = new THREE.Group();
+    rotorGroup.position.y = 8;
+
+    // Hub
+    const hubGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+    const hubMaterial = new THREE.MeshPhongMaterial({
+      color: 0x555555,
+      transparent: true,
+      opacity: 0.9
+    });
+    const hub = new THREE.Mesh(hubGeometry, hubMaterial);
+    rotorGroup.add(hub);
+
+    // Blades
+    const bladeGeometry = new THREE.BoxGeometry(0.1, 3, 0.4);
+    const bladeMaterial = new THREE.MeshPhongMaterial({
+      color: 0x3366cc,
+      transparent: true,
+      opacity: 0.9
+    });
+
+    for (let i = 0; i < 3; i++) {
+      const blade = new THREE.Mesh(bladeGeometry, bladeMaterial);
+      blade.position.y = 1.5;
+      const angle = (i * Math.PI * 2) / 3;
+      blade.rotation.z = angle;
+      blade.rotation.x = Math.PI / 2;
+      rotorGroup.add(blade);
+    }
+
+    turbineGroup.add(rotorGroup);
+
+    // Position turbine in scene
+    turbineGroup.position.set(4, 0, 0);
+
+    // Add turbine to scene
+    this.scene.add(turbineGroup);
+
+    // Store reference for animation
+    this.windElement = turbineGroup;
+  }
+
+  /**
    * Create and initialize particle system
    */
-  initParticles() {
-    const { particleCount, particleSize, colors } = this.config;
+  createParticles() {
+    const { particleCount, particleSize } = this.config;
+    const colors = {
+      primary: new THREE.Color(0x3366cc),
+      secondary: new THREE.Color(0x336699)
+    };
 
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colorsArray = new Float32Array(particleCount * 3);
 
-    for (let i = 0; i < particleCount * 3; i++) {
+    for (let i = 0; i < particleCount * 3; i += 3) {
       positions[i] = (Math.random() - 0.5) * 20;
-      colorsArray[i] = Math.random();
+      positions[i + 1] = (Math.random() - 0.5) * 20;
+      positions[i + 2] = (Math.random() - 0.5) * 20;
+
+      // Alternate between primary and secondary colors
+      const color = Math.random() > 0.5 ? colors.primary : colors.secondary;
+      colorsArray[i] = color.r;
+      colorsArray[i + 1] = color.g;
+      colorsArray[i + 2] = color.b;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -102,7 +283,7 @@ export class BackgroundRenderer {
       size: particleSize,
       vertexColors: true,
       transparent: true,
-      opacity: colors.gradientStart,
+      opacity: 0.6,
       sizeAttenuation: true,
       blending: THREE.AdditiveBlending
     });
@@ -136,15 +317,21 @@ export class BackgroundRenderer {
   }
 
   /**
-   * Update particle animation
+   * Update animation for all elements
    */
   update() {
     if (!this.particles) return;
 
     this.time += 0.001;
 
+    // Rotate particles
     this.particles.rotation.x = this.time * this.config.rotationSpeed.x;
     this.particles.rotation.y = this.time * this.config.rotationSpeed.y;
+
+    // Animate wind turbine rotor
+    if (this.windElement) {
+      this.windElement.children[1].children[0].rotation.y += 0.02;
+    }
 
     this.renderer.render(this.scene, this.camera);
   }

@@ -68,27 +68,71 @@ export class AnimationManager {
    * Initialize scroll-triggered animations
    */
   initScrollAnimations() {
-    const sections = document.querySelectorAll('section');
-
-    sections.forEach((section, index) => {
-      const animation = gsap.fromTo(section.children,
+    // Animate timeline items
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach((item, index) => {
+      const animation = gsap.fromTo(item,
         { y: 50, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: config.animations.heroDuration * 0.5,
-          stagger: config.animations.stagger,
+          duration: 0.8,
+          delay: index * 0.1,
           scrollTrigger: {
-            trigger: section,
-            start: config.animations.scrollTrigger.start,
-            toggleActions: config.animations.scrollTrigger.toggleActions
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
           },
           ease: 'power3.out'
         }
       );
 
-      this.animations.set(`scroll-section-${index}`, animation);
+      this.animations.set(`timeline-${index}`, animation);
     });
+
+    // Animate project cards
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach((card, index) => {
+      const animation = gsap.fromTo(card,
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          delay: index * 0.1,
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          },
+          ease: 'power3.out'
+        }
+      );
+
+      this.animations.set(`project-${index}`, animation);
+    });
+
+    // Animate skills chart
+    const skillsChart = document.querySelector('#skills-d3');
+    if (skillsChart) {
+      const chartAnimation = gsap.fromTo(skillsChart,
+        { scale: 0.8, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 1,
+          delay: 0.5,
+          scrollTrigger: {
+            trigger: skillsChart,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          },
+          ease: 'elastic.out(1, 0.5)'
+        }
+      );
+
+      this.animations.set('skills-chart', chartAnimation);
+    }
   }
 
   /**

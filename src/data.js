@@ -7,91 +7,110 @@ import { config } from './config.js';
 
 export const experienceData = [
   {
-    title: "Senior Software Engineer",
-    company: "Tech Company Inc.",
-    period: "2021 - Present",
-    description: "Leading development of enterprise applications and mentoring junior developers",
-    achievements: ["Led team of 5 developers", "Reduced load times by 40%", "Implemented CI/CD pipeline"]
+    title: "Consultant Software Engineer",
+    company: "Creadis S.A",
+    period: "Nov 2021 - Present",
+    description: "Wind Energy Sector - Control software for wind systems and turbine components, including plant start-up, reactive power management, lubrication control and load control. Worked through the full lifecycle: requirements definition, software architecture, implementation in C++ and Matlab/Simulink, and validation with unit tests.",
+    achievements: ["Designed and implemented start-up and reactive power controllers for Vestas wind plants, and object-oriented design algorithms for Turbine Control", "Led system modularization and automated documentation and validation using LaTeX, Artificial Intelligence, and Simulink Test Harness", "Collaborated with international teams to integrate new load control functionality and improve system reliability"]
   },
   {
-    title: "Full Stack Developer",
-    company: "Digital Agency",
-    period: "2018 - 2021",
-    description: "Built responsive web applications using modern frameworks",
-    achievements: ["Developed 20+ client projects", "Migrated legacy systems to React", "Improved SEO rankings by 60%"]
+    title: "Software Engineer",
+    company: "Ficosa S.L",
+    period: "Feb 2018 - Nov 2021",
+    description: "Automotive Sector - Developed critical C applications for Volkswagen Group parking assistance systems. Part of the ASPICE development chain from requirements definition to unit and integration testing, with a focus on traceability and safety.",
+    achievements: ["Designed a rear-view camera calibration algorithm in C meeting the functional requirements", "Produced complete architectural documentation and contributed to the top-view camera system design", "Debugged complex issues through CAN, Ethernet and RTP trace analysis", "Developed a Python tool to automate Jira task generation, accelerating up to 90% the project planning"]
   },
   {
-    title: "Frontend Developer",
-    company: "StartUp Hub",
-    period: "2016 - 2018",
-    description: "Created interactive user interfaces and experience prototypes",
-    achievements: ["Designed responsive layouts", "Implemented accessibility features", "Reduced bug rate by 35%"]
+    title: "Telecommunications Engineering Degree",
+    company: "Universitat Politècnica de Catalunya",
+    period: "2013 - 2018",
+    description: "Specialized in Electronic Systems. Thesis on Ficosa's PM automation tool.",
+    achievements: ["Focus on Electronic Systems specialization", "Completed thesis on process automation tools development"]
   }
 ];
 
 export const skillsData = {
-  frontend: [
-    { name: "JavaScript", level: 95 },
-    { name: "React", level: 90 },
-    { name: "Vue", level: 85 },
-    { name: "TypeScript", level: 80 }
+  languages: [
+    { name: "C++", level: 85 },
+    { name: "C", level: 90 },
+    { name: "Python", level: 80 },
+    { name: "Matlab", level: 85 },
+    { name: "Bash", level: 75 },
+    { name: "Java", level: 70 },
+    { name: "VisualBasic", level: 65 },
+    { name: "SQL", level: 80 }
   ],
-  backend: [
-    { name: "Node.js", level: 85 },
-    { name: "Python", level: 75 },
-    { name: "PostgreSQL", level: 80 },
-    { name: "Redis", level: 70 }
+  control: [
+    { name: "Matlab", level: 85 },
+    { name: "Simulink", level: 85 }
   ],
-  tools: [
-    { name: "Git", level: 90 },
-    { name: "Docker", level: 80 },
-    { name: "AWS", level: 75 },
-    { name: "CI/CD", level: 85 }
+  embedded: [
+    { name: "Lauterbach TRACE32", level: 80 },
+    { name: "J-Link (Segger)", level: 80 }
+  ],
+  automotive: [
+    { name: "Vector Tools", level: 85 },
+    { name: "ASPICE", level: 80 },
+    { name: "Doors", level: 75 }
+  ],
+  projectManagement: [
+    { name: "Jira", level: 85 },
+    { name: "Excel", level: 90 },
+    { name: "SVN", level: 80 }
+  ],
+  generalSoftware: [
+    { name: "Git", level: 85 },
+    { name: "Windows", level: 90 },
+    { name: "Linux", level: 75 },
+    { name: "CAN", level: 85 },
+    { name: "ETH", level: 80 },
+    { name: "RTP", level: 75 },
+    { name: "Docker", level: 70 },
+    { name: "LaTeX", level: 75 },
+    { name: "Enterprise Architect", level: 70 }
   ]
 };
 
 export const projectsData = [
   {
-    title: "E-Commerce Platform",
-    description: "Full-stack shopping experience with real-time inventory",
-    tech: ["React", "Node.js", "MongoDB", "Redis"],
+    title: "Wind Turbine Control System",
+    description: "Control software for wind systems and turbine components, including plant start-up, reactive power management, lubrication control and load control.",
+    tech: ["C++", "Matlab/Simulink", "Vestas", "Siemens Energy"],
     link: "#",
-    icon: "🛒"
+    icon: "🌀",
+    industry: "wind"
   },
   {
-    title: "Dashboard Analytics",
-    description: "Real-time data visualization and reporting system",
-    tech: ["Vue.js", "D3.js", "GraphQL", "PostgreSQL"],
+    title: "Rear View Camera Calibration",
+    description: "Critical C application for Volkswagen Group parking assistance systems. Designed a rear-view camera calibration algorithm meeting functional requirements.",
+    tech: ["C", "Volkswagen Group", "CAN", "Ethernet", "RTP"],
     link: "#",
-    icon: "📊"
+    icon: "📷",
+    industry: "automotive"
   },
   {
-    title: "Mobile App",
-    description: "Cross-platform mobile application with social features",
-    tech: ["React Native", "Firebase", "Redux"],
+    title: "PM Automation Tool",
+    description: "Telecommunications Engineering thesis on process automation tools development at Ficosa.",
+    tech: ["Python", "Automation", "Process Management", "XML"],
     link: "#",
-    icon: "📱"
+    icon: "⚙️",
+    industry: "general"
   },
   {
-    title: "AI Integration",
-    description: "Machine learning powered recommendation engine",
-    tech: ["Python", "TensorFlow", "FastAPI", "PostgreSQL"],
+    title: "Jira Task Automation",
+    description: "Python tool to automate Jira task generation, accelerating project planning up to 90%.",
+    tech: ["Python", "Jira", "Automation", "API"],
     link: "#",
-    icon: "🤖"
+    icon: "📊",
+    industry: "general"
   },
   {
-    title: "Cloud Infrastructure",
-    description: "Scalable cloud architecture and DevOps pipeline",
-    tech: ["AWS", "Docker", "Kubernetes", "Terraform"],
+    title: "Documentation Generator",
+    description: "Automated documentation and validation using LaTeX and Artificial Intelligence for system documentation.",
+    tech: ["LaTeX", "AI", "Documentation", "Validation"],
     link: "#",
-    icon: "☁️"
-  },
-  {
-    title: "Security Suite",
-    description: "Comprehensive security monitoring and protection",
-    tech: ["Node.js", "Redis", "WAF", "Logging"],
-    link: "#",
-    icon: "🔒"
+    icon: "📝",
+    industry: "general"
   }
 ];
 

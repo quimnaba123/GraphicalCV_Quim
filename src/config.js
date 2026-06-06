@@ -43,8 +43,22 @@ export const config = {
       }
     },
     axes: {
-      labels: ['JS', 'React', 'Node', 'Python', 'AWS']
+      labels: ['C++', 'C', 'Python', 'Matlab', 'CAN']
     }
+  },
+
+  // Skills configuration
+  skills: {
+    categories: ['languages', 'control', 'embedded', 'automotive', 'projectManagement', 'generalSoftware'],
+    categoryColors: {
+      languages: 'rgba(59, 130, 246, 0.6)',
+      control: 'rgba(139, 92, 246, 0.6)',
+      embedded: 'rgba(236, 72, 153, 0.6)',
+      automotive: 'rgba(34, 197, 94, 0.6)',
+      projectManagement: 'rgba(249, 115, 22, 0.6)',
+      generalSoftware: 'rgba(20, 184, 166, 0.6)'
+    },
+    maxLevel: 90
   },
 
   // UI colors
