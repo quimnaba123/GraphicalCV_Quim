@@ -1,0 +1,70 @@
+services:
+  # Development service with hot reload and auto-restart
+  dev:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+      target: dev
+    container_name: cv-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_HOST=0.0.0.0
+    command: npm run dev -- --host 0.0.0.0 --strictPort
+    restart: unless-stopped
+    networks:
+      - cv-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5173"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  # Production build service
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    container_name: cv-builder
+    volumes:
+      - ./dist:/app/dist
+    environment:
+      - NODE_ENV=production
+    command: npm run build
+    networks:
+      - cv-network
+    profiles:
+      - build
+
+  # Production server with nginx
+  production:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cv-production
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - cv-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    profiles:
+      - production
+
+networks:
+  cv-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
