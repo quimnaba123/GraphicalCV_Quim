@@ -34,35 +34,12 @@ Interactive CV website with Podman containerization
 - **Interactive Elements** - Smooth animations and transitions
 - **Production Ready** - Optimized, secure, and maintainable
 
-### Core Application (7 files)
-- ✅ `index.html` - Main template with sections
-- ✅ `src/main.js` - Application logic and data
-- ✅ `src/styles.css` - Custom styles and Tailwind
-- ✅ `vite.config.js` - Vite configuration
-- ✅ `postcss.config.js` - PostCSS setup
-- ✅ `package.json` - Dependencies and scripts
-- ✅ `.gitignore` - Git exclusions
-
 ### Containerization (5 files)
 - ✅ `Dockerfile` - Production build
 - ✅ `dev.Dockerfile` - Development environment
 - ✅ `nginx.conf` - Web server configuration
 - ✅ `podman-compose.yml` - Container orchestration
 - ✅ `.dockerignore` - Docker build optimization
-
-### Documentation (7 files)
-- ✅ `README.md` - Main documentation
-- ✅ `QUICKSTART.md` - Quick start guide
-- ✅ `PROJECT_SUMMARY.md` - Project overview
-- ✅ `SETUP_COMPLETE.md` - Setup completion guide
-- ✅ `CONTRIBUTING.md` - Contribution guidelines
-- ✅ `CHANGELOG.md` - Version history
-- ✅ `.env.example` - Environment template
-
-### Utilities (2 files)
-- ✅ `setup.sh` - Linux/Mac setup script
-- ✅ `setup.bat` - Windows setup script
-- ✅ `verify-setup.js` - Setup verification
 
 ## 🚀 How to Use
 

@@ -8,8 +8,9 @@ services:
     container_name: cv-dev
     ports:
       - "5173:5173"
+      - "9229:9229"  # debugging
     volumes:
-      - .:/app
+      - .:/app:Z
       - /app/node_modules
     environment:
       - NODE_ENV=development

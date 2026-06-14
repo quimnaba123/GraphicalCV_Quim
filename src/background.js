@@ -61,7 +61,8 @@ export class BackgroundRenderer {
       0.1,
       1000
     );
-    this.camera.position.z = this.config.rotationSpeed.x;
+    this.camera.position.set(0, 2, 12);
+    this.camera.lookAt(0, 2, 0);
   }
 
   /**
@@ -84,6 +85,13 @@ export class BackgroundRenderer {
    */
   initSceneWithElements() {
     this.scene = new THREE.Scene();
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    this.scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    directionalLight.position.set(5, 10, 8);
+    this.scene.add(directionalLight);
 
     // Create automotive element (car with rear view camera)
     this.createAutomotiveElement();
@@ -330,14 +338,14 @@ export class BackgroundRenderer {
 
     // Animate wind turbine rotor
     if (this.windElement) {
-      this.windElement.children[1].children[0].rotation.y += 0.02;
+      this.windElement.rotation.y += 0.02;
     }
 
     this.renderer.render(this.scene, this.camera);
   }
 
   /**
-   * Cleanup and dispose resources
+   * Cleanup and dispose windElementresources
    */
   cleanup() {
     if (this.animationId) {

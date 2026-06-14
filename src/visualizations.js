@@ -64,7 +64,8 @@ export class VisualizationRenderer {
     const radius = 180;
 
     // Draw background circles
-    this.drawBackgroundCircles(svg, centerX, centerY, radius, skillsConfig.radar.levels);
+    const radarLevels = config.d3?.radar?.levels ?? 5;
+    this.drawBackgroundCircles(svg, centerX, centerY, radius, radarLevels);
 
     // Draw axes and labels
     this.drawAxesAndLabels(svg, centerX, centerY, radius, categories, skillsConfig.categoryColors);

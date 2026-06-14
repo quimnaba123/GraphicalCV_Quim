@@ -1,0 +1,24 @@
+{
+  "name": "GraphicalCV Dev",
+  "dockerComposeFile": "../podman-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/app",
+  "remoteUser": "node",
+  "containerUser": "node",
+  "updateRemoteUserUID": false,
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next"
+      ]
+    }
+  },
+  //"remoteUser": "quimnadalbargues",
+  //"forwardPorts": [5173]
+  "forwardPorts": [5173, 9229]
+}

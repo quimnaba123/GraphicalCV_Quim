@@ -1,6 +1,8 @@
 # Development stage
 FROM docker.io/node:20-alpine AS dev
 
+RUN apk add --no-cache wget
+
 WORKDIR /app
 
 # Copy package files
@@ -17,6 +19,8 @@ COPY src/ ./src/
 
 # Expose development port
 EXPOSE 5173
+# debug port
+EXPOSE 9229 
 
 # Run development server
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+CMD ["sh", "-c", "NODE_OPTIONS='--inspect=0.0.0.0:9229' npm run dev -- --host 0.0.0.0"]
